@@ -1,0 +1,60 @@
+Perhaps surprisingly, concurrent programming isn’t so much about threads or
+locks, any more than civil engineering is about rivets and I-beams. Of course,
+building bridges that don’t fall down requires the correct use of a lot of rivets and
+I-beams, just as building concurrent programs require the correct use of threads
+and locks. But these are just mechanisms—means to an end. Writing thread-safe
+code is, at its core, about managing access to state, and in particular to shared,
+mutable state.
+
+Возможно это и неожиданно, но параллельное программирование - это не столько про потоки или
+замки, и даже больше, где у гражданского строительства составляют заклепки и балки. Конечно,
+для строительства мостов, которые не падают, требуется правильное использования многих заклепок и двутавровых балок,
+как для построения параллельных программ требуется правильное использования потоков и замков.
+Но это всего лишь механизмы — средства для достижения цели. Написание потокобезопасного
+кода является, по своей сути, управлением доступом к состоянию, и в частности к общему, изменяемому состоянию.
+
+By shared, we mean that a variable could be accessed by multiple threads; by
+mutable, we mean that its value could change during its lifetime. We may talk
+about thread safety as if it were about code, but what we are really trying to do is
+protect data from uncontrolled concurrent access.
+
+Под общими, мы имеем в виду, что переменная может быть доступна для нескольких потоков; под
+мутабельностью, мы имеем в виду, что её значение может меняться в течение жизни. Мы можем говорить
+о потокобезопасности в коде, но то, что мы действительно пытаемся сделать, это
+защитить данные от неконтролируемого одновременного доступа.
+
+Whenever more than one thread accesses a given state variable, and one of them might
+write to it, they all must coordinate their access to it using synchronization. The primary
+mechanism for synchronization in Java is the synchronized keyword, which provides
+exclusive locking, but the term “synchronization” also includes the use of
+volatile variables, explicit locks, and atomic variables.
+
+Всякий раз, когда более чем один поток получает доступ к переменной состояния, и один из них может
+писать в неё, все они должны координировать свои доступы к неё с помощью синхронизации. Основной
+механизм синхронизации в Java - это служебное слово synchronized, которое обеспечивает
+эксклюзивный замок, но термин “синхронизация” также включает в себя использование
+volatile переменных, явных блокировок, и атомарных переменных (volatile variables, explicit locks, and atomic variables).
+
+Having optimistically defined “correctness” as something that
+can be recognized, we can now define thread safety in a somewhat less circular
+way: a class is thread-safe when it continues to behave correctly when accessed
+from multiple threads.
+
+Имея оптимистичное определение “правильности” как-то, что
+может быть узнано, мы теперь можем определить потокобезопасность несколько менее круговым
+путём: класс является потокобезопасным, если он продолжает вести себя правильно, когда к нему обращаются из нескольких потоков.
+
+Since any single-threaded program is also a valid multithreaded program, it
+cannot be thread-safe if it is not even correct in a single-threaded environment.2
+If an object is correctly implemented, no sequence of operations—calls to public
+methods and reads or writes of public fields—should be able to violate any of
+its invariants or postconditions. No set of operations performed sequentially or concurrently
+on instances of a thread-safe class can cause an instance to be in an invalid
+state.
+
+Поскольку любая однопоточная программа также является допустимой многопоточной программой, она
+не может быть потокобезопасной, если она не корректна в однопоточной среде.
+Если объект правильно реализован, то никакая последовательность операций, вызов публичных
+методов, чтение или запись публичных полей - не должны быть в состоянии нарушить любой из его состояний или постусловий.
+Никакой набор операций, выполняемых последовательно или параллельно на экземплярах потокобезопасного класса
+не может привести к тому, что экземпляр окажется в неправильном состоянии.
